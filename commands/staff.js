@@ -37,6 +37,8 @@ module.exports = {
     
       let target = message.mentions.members.first() || message.guild.members.cache.get(args[1]) || message.guild.members.cache.find(m => m.user.tag === args[1])
     
+      if(!target) return message.channel.send('Please mention someone or use their id or use their tag')
+      
       if(args[0] === 'add'){      
         if(!client.staff.has(message.guild.id+target.id)){
           client.staff.ensure(message.guild.id + target.id, {
