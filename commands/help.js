@@ -61,9 +61,10 @@ module.exports = {
         const embed = new MessageEmbed()
         .setTitle(`Information about the **${cmd.name}** command`)
         .setColor('#008000')
-        .addField('Alias(es)', cmd.aliases.join('\n'))
-        .addField('Guild only', cmd.guildOnly)
-        .setDescription(cmd.description)
+        .addField('Alias(es)', cmd.aliases.join('\n') + '\u200b')
+        .addField('Guild only', cmd.guildOnly + '\u200b')
+        if(!!cmd.perms_needed) embed.addField('Permissions required', cmd.perms_needed.join('\n'))
+        embed.setDescription(cmd.description)
         
         return message.author.send(embed).catch(e => message.channel.send(embed))
       }

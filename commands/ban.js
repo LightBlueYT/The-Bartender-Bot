@@ -1,11 +1,12 @@
 const {red, green} = require('../colors.json')
 module.exports = {
-	name: 'name',
-	description: 'desc',
-  guildOnly: false,
+	name: 'ban',
+	description: 'Ban a member from the server',
+  guildOnly: true,
   ownerOnly: false,
   aliases: [],
   category: 'mod', // mod > info > fun > misc
+  perms_needed: ['BAN_MEMBERS'],
 	execute(message, args, client, MessageEmbed) {
     
     const target = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(m => m.tag === args[0])
@@ -25,7 +26,7 @@ module.exports = {
       return message.channel.send(embed)
     }
     
-    if(!client.staff.get(message.guild.id + message.member.id, 'allowBan') || !message.member.permissions.has('BAN_MEMBERS')){
+    if(!client.staff.get(message.guild.id + message.member.id, 'allow_ban') || !message.member.permissions.has('BAN_MEMBERS')){
       const embed = new MessageEmbed()
       .setTitle('You are not allowed to ban members')
       .setColor(red)

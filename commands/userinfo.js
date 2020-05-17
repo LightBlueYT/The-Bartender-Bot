@@ -14,8 +14,7 @@ module.exports = {
     if (member.user.bot) array.push('BOT')
     if (member.id === member.guild.ownerID) { array.push('OWNER')
     } else if (member.hasPermission('ADMINISTRATOR') && member.id !== member.guild.ownerID) { array.push('ADMIN')
-    } else { array.push(member.roles.highest.name) }
-    
+    } else if (client.staff.get(message.guild.id + message.author.id, 'isStaff')) { array.push('STAFF')}   
     let title = `${member.user.tag}'s info [${array.join(', ')}]`
 
     

@@ -3,7 +3,7 @@ const {MessageEmbed} = require('discord.js');
 
 module.exports = (client, message) => {
   
-  if(message.mentions.users.has(client.user.id)) return message.channel.send(`Current prefix is \`${client.serverconfig.get(message.guild.id, 'prefix')}\``)
+  if(message.content === '<@!703934678880485406>' || message.content === '<@703934678880485406>') return message.channel.send(`Current prefix is \`${client.serverconfig.get(message.guild.id, 'prefix')}\``)
   
   if(message.author.bot) return;
   
@@ -14,10 +14,10 @@ module.exports = (client, message) => {
     client.staff.ensure(message.guild.id + message.author.id, {
       member: message.member.id,
       isStaff: false,
-      allowKick: false,
-      allowBan: false,
-      allowMute: false,
-      allowWarn: false
+      allow_kick: false,
+      allow_ban: false,
+      allow_mute: false,
+      allow_warn: false
     });
     //Guild Custom Staff End
   } else {
