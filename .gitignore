@@ -1,3 +1,6 @@
-*.json
 *.yaml
 *.glitch-assets
+*.json
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal

@@ -40,7 +40,7 @@ client.welcomemessage = new Enmap({name: `Welcomemessage`})
 client.staff = new Enmap({name: `staff`})
 
 
-client.login(token);
+client.login(process.env.TOKEN);
 
 const http = require("http");
 const express = require("express");
