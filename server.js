@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const Enmap = require('enmap');
+const {token} = require('./config.json')
 
 const fs = require('fs');
 
@@ -39,7 +40,7 @@ client.welcomemessage = new Enmap({name: `Welcomemessage`})
 client.staff = new Enmap({name: `staff`})
 
 
-client.login('NzAzOTM0Njc4ODgwNDg1NDA2.XqV0aA.Mu3VkeCSaA89ffcnLzp6u5xQdJo');
+client.login(token);
 
 const http = require("http");
 const express = require("express");
