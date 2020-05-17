@@ -1,0 +1,58 @@
+const {prefix, owner} = require('../config.json');
+const {MessageEmbed} = require('discord.js');
+
+module.exports = (client, message) => {
+  
+  if(message.mentions.users.has(client.user.id)) return message.channel.send(`Current prefix is \`${client.serverconfig.get(message.guild.id, 'prefix')}\``)
+  
+  if(message.author.bot) return;
+  
+  if(message.guild){
+    if (!message.content.startsWith(client.serverconfig.get(message.guild.id, 'prefix'))) return;
+    
+    //Guild Custom Staff Start
+    client.staff.ensure(message.guild.id + message.author.id, {
+      member: message.member.id,
+      isStaff: false,
+      allowKick: false,
+      allowBan: false,
+      allowMute: false,
+      allowWarn: false
+    });
+    //Guild Custom Staff End
+  } else {
+    if (!message.content.startsWith('!') || message.author.bot) return;
+  }
+	const args = message.content.slice(prefix.length).split(/ +/);
+  const commandName = args.shift().toLowerCase();
+
+  const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+  
+  if (!command) return;
+
+    if (command.guildOnly && message.channel.type === 'dm'){
+    let embed = new MessageEmbed()
+    .setTitle('Command can only be used in guilds')
+    .setColor('RED')
+    return message.channel.send(embed).catch(err => console.error(err))
+  }
+  
+  if(command.ownerOnly && message.author.id !== owner.id){
+    let embed = new MessageEmbed()
+    .setTitle('You can\'t run this command')
+    .setColor('RED')
+    return message.channel.send(embed).catch(err => console.error(err))
+  }
+
+  try {
+    command.execute(message, args, client, MessageEmbed);
+  } catch (error) {
+	  console.error(error);
+    if(message.author.id === owner.id){
+      const embed = new MessageEmbed()
+      .setTitle('An error occured')
+      .setColor('RED')
+      message.channel.send(embed).catch(err => console.error(err))
+    };
+  }
+}
