@@ -1,3 +1,5 @@
+const ms = require('ms');
+const moment = require('moment');
 module.exports = {
 	name: 'eval',
 	description: 'Eval',

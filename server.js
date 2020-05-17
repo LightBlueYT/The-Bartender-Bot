@@ -38,6 +38,8 @@ client.serverconfig = new Enmap({name: `serverconfig`})
 client.xp = new Enmap({name: `xp`})
 client.welcomemessage = new Enmap({name: `Welcomemessage`})
 client.staff = new Enmap({name: `staff`})
+client.cases = new Enmap({name: `cases`})
+client.cchan = new Enmap({name: `cchan`})
 
 
 client.login(process.env.TOKEN);

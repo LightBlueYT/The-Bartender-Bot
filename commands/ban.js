@@ -1,3 +1,4 @@
+const moment = require('moment')
 const {red, green} = require('../colors.json')
 module.exports = {
 	name: 'ban',
@@ -26,13 +27,8 @@ module.exports = {
       return message.channel.send(embed)
     }
     
-    if(!client.staff.get(message.guild.id + message.member.id, 'allow_ban') || !message.member.permissions.has('BAN_MEMBERS')){
-      const embed = new MessageEmbed()
-      .setTitle('You are not allowed to ban members')
-      .setColor(red)
-      
-      return message.channel.send(embed)
-    }
+    if(message.member.permissions.has('BAN_MEMBERS') || client.staff.get(message.guild.id + message.member.id, 'allow_ban')){
+
     if(!message.guild.me.permissions.has('BAN_MEMBERS')){
       const embed = new MessageEmbed()
       .setTitle('I\'m missing permissions to **ban** members')
@@ -57,19 +53,50 @@ module.exports = {
       return message.channel.send(embed)
     }
     
-    let reason = args.slice(0).join(' ')
-    if(!reason) reason = `Kicked ${target.user.tag}`
+    let reason = args.slice(1).join(' ')
+    if(reason.length <= 0) reason = `Banned ${target.user.username}#${target.user.discriminator}`
     
     async function ban() {
-      await target.send(`You have been banned from: *${message.guild.name}*\nReason: \`\`\`${reason}\`\`\``).catch( async err => {
-        message.channel.send('ban failed retrying')
-        await target.ban()
-        message.channel.send(`Member ${target.user.username}#${target.user.discriminator} have been banned`)
+      await target.send(`You have been banned from: *${message.guild.name}*\nReason: \`\`\`${reason}\`\`\``).catch(err => {
+        target.ban()
       })
-      await target.ban()
+      target.ban()
       message.channel.send(`Member ${target.user.username}#${target.user.discriminator} have been banned`)
     }
     
     ban()
+    
+    client.cases.ensure(`${message.guild.id}-${client.cases.count + 1}`, {
+      case: client.cases.count + 1,
+      type: 'Ban',
+      executor: message.member.id,
+      target: target.id,
+      reason: reason,
+      time: moment().format('MMMM Do YYYY, HH:MM')
+    })
+    
+    const cases = new MessageEmbed()
+    .setTitle(`Case #${client.cases.get(`${message.guild.id}-${client.cases.count}`, 'case')}`)
+    .setDescription(`Type: \`Ban\`\n----------\nExecutor: \`${message.member.user.tag}\`\nTarget: \`${target.user.username}#${target.user.discriminator}\`\n----------\nReason: \`\`\`${reason}\`\`\``)
+    .setFooter(`${moment().format('MMMM Do YYYY, HH:MM')}`)
+    .setColor(green)
+    
+    if(!client.channels.cache.has(client.cchan.get(message.guild.id, 'channel'))){
+      message.guild.channels.create('bot-cases', {
+        type: 'text',
+        topic: 'Case files will be stored in this channel you can move it and rename it as you wish altho you cant choose or create a case channel its automatic!',
+        permissionOverwrites: [{id: message.guild.id, deny: ['SEND_MESSAGES'], allow: ['READ_MESSAGES']}, {id: message.guild.me, allow: ['VIEW_CHANNEL', 'SEND_MESSAGES']}]
+      }).then(c => {
+        client.cchan.set(message.guild.id, c.id, 'channel')
+        c.send(cases)
+      })
+    } else { client.channels.cache.get(client.cchan.get(message.guild.id, 'channel')).send(cases)}
+    } else {
+      const embed = new MessageEmbed()
+      .setTitle('You are not allowed to ban members')
+      .setColor(red)
+      
+      return message.channel.send(embed)
+    }
   },
 };

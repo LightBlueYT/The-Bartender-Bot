@@ -8,7 +8,12 @@ module.exports = (client, message) => {
   if(message.author.bot) return;
   
   if(message.guild){
-    if (!message.content.startsWith(client.serverconfig.get(message.guild.id, 'prefix'))) return;
+    
+    //Guild Case Channel Start
+    client.cchan.ensure(message.guild.id, {
+      channel: ''
+    })
+    //Guild Case Channel End
     
     //Guild Custom Staff Start
     client.staff.ensure(message.guild.id + message.author.id, {
@@ -20,6 +25,9 @@ module.exports = (client, message) => {
       allow_warn: false
     });
     //Guild Custom Staff End
+    
+    if (!message.content.startsWith(client.serverconfig.get(message.guild.id, 'prefix'))) return;
+  
   } else {
     if (!message.content.startsWith('!') || message.author.bot) return;
   }
