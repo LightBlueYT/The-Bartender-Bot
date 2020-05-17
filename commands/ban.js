@@ -19,22 +19,22 @@ module.exports = {
     }
     if(target.id === message.member.id){
       const embed = new MessageEmbed()
-      .setTitle('You cannot kick yourself')
+      .setTitle('You cannot ban yourself')
       .setColor(red)
       
       return message.channel.send(embed)
     }
     
-    if(!client.staff.get(message.guild.id + message.member.id, 'allowKick') || !message.member.permissions.has('KICK_MEMBERS')){
+    if(!client.staff.get(message.guild.id + message.member.id, 'allowBan') || !message.member.permissions.has('BAN_MEMBERS')){
       const embed = new MessageEmbed()
-      .setTitle('You are not allowed to kick members')
+      .setTitle('You are not allowed to ban members')
       .setColor(red)
       
       return message.channel.send(embed)
     }
-    if(!message.guild.me.permissions.has('KICK_MEMBERS')){
+    if(!message.guild.me.permissions.has('BAN_MEMBERS')){
       const embed = new MessageEmbed()
-      .setTitle('I\'m missing permissions to **kick** members')
+      .setTitle('I\'m missing permissions to **ban** members')
       .setColor(red)
       
       return message.channel.send(embed)
@@ -42,7 +42,7 @@ module.exports = {
     
     if(message.member.roles.highest.position < target.roles.highest.position){
       const embed = new MessageEmbed()
-      .setTitle('This member have higher permissions than you and cannot be kicked')
+      .setTitle('This member have higher permissions than you and cannot be banned')
       .setColor(red)
       
       return message.channel.send(embed)
@@ -50,7 +50,7 @@ module.exports = {
     
     if(message.guild.me.roles.highest.position < target.roles.highest.position){
       const embed = new MessageEmbed()
-      .setTitle('This member have higher permissions than me and cannot be kicked')
+      .setTitle('This member have higher permissions than me and cannot be banned')
       .setColor(red)
       
       return message.channel.send(embed)
@@ -59,16 +59,16 @@ module.exports = {
     let reason = args.slice(0).join(' ')
     if(!reason) reason = `Kicked ${target.user.tag}`
     
-    async function kick() {
-      await target.send(`You have been kicked from: *${message.guild.name}*\nReason: \`\`\`${reason}\`\`\``).catch( async err => {
-        message.channel.send('Kick failed retrying')
-        await target.kick()
-        message.channel.send(`Member ${target.user.username}#${target.user.discriminator} have been kicked`)
+    async function ban() {
+      await target.send(`You have been banned from: *${message.guild.name}*\nReason: \`\`\`${reason}\`\`\``).catch( async err => {
+        message.channel.send('ban failed retrying')
+        await target.ban()
+        message.channel.send(`Member ${target.user.username}#${target.user.discriminator} have been banned`)
       })
-      await target.kick()
-      message.channel.send(`Member ${target.user.username}#${target.user.discriminator} have been kicked`)
+      await target.ban()
+      message.channel.send(`Member ${target.user.username}#${target.user.discriminator} have been banned`)
     }
     
-    kick()
+    ban()
   },
 };
