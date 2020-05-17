@@ -48,6 +48,7 @@ module.exports = {
             allow_warn: false
           });
         }
+  
         if(client.staff.get(message.guild.id+target.id, 'isStaff')) return message.channel.send(`This member is already in the STAFF Team`)
       
         client.staff.set(message.guild.id + target.id, true, 'isStaff')
@@ -55,6 +56,8 @@ module.exports = {
       }
     
       if(args[0] === 'remove'){
+        if(!client.staff.get(message.guild.id+target.id, 'isStaff')) return message.channel.send(`This member is not in the STAFF Team`)
+
         client.staff.set(message.guild.id+target.id, false, 'isStaff')
         message.channel.send(`${target.displayName} have been removed from the STAFF Team`)
       }
