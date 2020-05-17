@@ -7,6 +7,9 @@ module.exports = {
   aliases: [],
   category: 'mod', //mod info fun misc
 	execute(message, args, client, MessageEmbed) {
+
+    if(!message.member.permissions.has('ADMINISTRATOR') || message.guild.ownerID !== message.member.id) return message.channel.send(`You don't have the permissions require to run this command`)
+    
     if(args[0] === 'list'){
       
       async function arr() {
