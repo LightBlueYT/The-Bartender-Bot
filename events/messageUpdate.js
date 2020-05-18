@@ -1,1 +1,1 @@
-module.exports=(client,o,n)=>{client.emit('message',n)}
+module.exports=(client,o,n)=>client.emit('message',n)
