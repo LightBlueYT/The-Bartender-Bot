@@ -2,8 +2,9 @@ const {prefix, owner} = require('../config.json');
 const {MessageEmbed} = require('discord.js');
 
 module.exports = (client, message) => {
-  
-  if(message.content === '<@!703934678880485406>' || message.content === '<@703934678880485406>') return message.channel.send(`Current prefix is \`${client.serverconfig.get(message.guild.id, 'prefix')}\``)
+  let mentionRegexp = /^<@!?703934678880485406>$/
+	
+  if(mentionRegexp.test(message.content)) return message.channel.send(`Current prefix is \`${client.serverconfig.get(message.guild.id, 'prefix')}\``)
   
   if(message.author.bot) return;
   
@@ -42,14 +43,14 @@ module.exports = (client, message) => {
     let embed = new MessageEmbed()
     .setTitle('Command can only be used in guilds')
     .setColor('RED')
-    return message.channel.send(embed).catch(err => console.error(err))
+    return message.channel.send(embed).catch(console.error)
   }
   
   if(command.ownerOnly && message.author.id !== owner.id){
     let embed = new MessageEmbed()
     .setTitle('You can\'t run this command')
     .setColor('RED')
-    return message.channel.send(embed).catch(err => console.error(err))
+    return message.channel.send(embed).catch(console.error)
   }
 
   try {
@@ -60,7 +61,7 @@ module.exports = (client, message) => {
       const embed = new MessageEmbed()
       .setTitle('An error occured')
       .setColor('RED')
-      message.channel.send(embed).catch(err => console.error(err))
+      message.channel.send(embed).catch(console.error)
     };
   }
 }

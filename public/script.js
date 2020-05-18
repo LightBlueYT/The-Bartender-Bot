@@ -1,7 +1,7 @@
 // client-side js, loaded by index.html
 // run by the browser each time the page is loaded
 
-console.log("hello world :o");
+console.log("Oh hello there! What are you doing here in the backdoor? hmm?");
 
 // define variables that reference elements on our page
 const dreamsList = document.getElementById("dreams");
