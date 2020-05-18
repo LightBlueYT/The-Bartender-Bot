@@ -1,5 +1,5 @@
 module.exports = (client, guild) => {
-  const def = guild.channels.cache.find(c => c.name.match('welcome')) || guild.channels.cache.find(c => c.name.match('new-members')) || guild.channels.cache.find(c => c.name.match('general')) || guild.channels.cache.filter(c => c.permissionsFor(guild.member(client.user)).has('SEND_MESSAGES')).first();
+  const def = guild.channels.cache.find(c => c.name.match('welcome')) || guild.channels.cache.find(c => c.name.match('new-members')) || guild.channels.cache.find(c => c.name.match('general')) || guild.channels.cache.filter(c => c.permissionsFor(guild.member(client.user)).has('SEND_MESSAGES')).first() || guild.systemChannel;
   
   client.serverconfig.ensure(guild.id, {
     welcome_channel: def.id,
