@@ -5,6 +5,7 @@ module.exports = {
   guildOnly: false,
   ownerOnly: true,
   aliases: ['refresh'],
+  perms_needed: [],
 	execute(message, args, client, MessageEmbed) {
       
     if(!args[0]){

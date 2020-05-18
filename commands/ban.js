@@ -72,7 +72,7 @@ module.exports = {
       executor: message.member.id,
       target: target.id,
       reason: reason,
-      time: moment().format('MMMM Do YYYY, HH:MM')
+      time: moment().format('MMMM Do YYYY, HH:MM'),
     })
     
     const cases = new MessageEmbed()

@@ -5,6 +5,7 @@ module.exports = {
   ownerOnly: false,
   aliases: ['h'],
   category: 'info', //mod info fun misc
+  perms_needed: [],
 	execute(message, args, client, MessageEmbed) {
     
     const Info = client.commands.filter(c => c.category === 'info').size

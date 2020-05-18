@@ -5,6 +5,7 @@ module.exports = {
   ownerOnly: false,
   aliases: ['role', 'rf'],
   category: 'info', //mod info fun misc
+  perms_needed: [],
 	execute(message, args, client, MessageEmbed) {
     const role = message.mentions.roles.first() || message.guild.roles.cache.find(r => r.name.match(args[0])) || message.guild.roles.cache.get(args[0]) || message.member.roles.highest;
     const time = `${role.createdAt.toDateString()} ${role.createdAt.getHours()}:${role.createdAt.getMinutes()}`

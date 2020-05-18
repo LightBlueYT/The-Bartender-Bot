@@ -5,6 +5,7 @@ module.exports = {
   ownerOnly: false,
   aliases: ['conf', 'configuration'],
   category: 'mod', //mod info fun misc
+  perms_needed: [],
 	execute(message, args, client, MessageEmbed) {
     const prefix = client.serverconfig.get(message.guild.id, 'prefix');
       

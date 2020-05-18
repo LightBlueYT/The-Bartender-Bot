@@ -5,6 +5,7 @@ module.exports = {
   ownerOnly: false,
   aliases: ['info', 'server', 'guild', 'guildinfo'],
   category: 'info', //mod info fun misc
+  perms_needed: [],
 	execute(message, args, client, MessageEmbed) {
     let color = message.member.roles.highest.hexColor;
     if(message.member.roles.highest.hexColor === '#000000'){ 

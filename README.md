@@ -1,6 +1,6 @@
 ## Version: 0.0.1 
-## Current Build: Alpha Alpha Four
-## Current Development: Alpha Alpha Five
+## Current Build: Alpha Alpha Five
+## Current Development: Alpha Alpha Six
 
 Build meaning: 
 * 1st word is for the main build version big updates practically

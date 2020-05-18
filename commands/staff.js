@@ -6,6 +6,7 @@ module.exports = {
   ownerOnly: false,
   aliases: [],
   category: 'mod', //mod info fun misc
+  perms_needed: [],
 	execute(message, args, client, MessageEmbed) {
 
     if(message.member.permissions.has('ADMINISTRATOR') || message.guild.ownerID === message.member.id) {

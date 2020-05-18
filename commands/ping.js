@@ -5,6 +5,7 @@ module.exports = {
   ownerOnly: false,
   aliases: ['ms'],
   category: 'info', //mod info fun misc
+  perms_needed: [],
 	execute(message, args, client, MessageEmbed) {
     const embed = new MessageEmbed()
     .setTitle(`${Math.floor(client.ws.ping)}MS`)
