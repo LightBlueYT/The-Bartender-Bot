@@ -2,8 +2,9 @@ const {prefix, owner} = require('../config.json');
 const {MessageEmbed} = require('discord.js');
 
 module.exports = (client, message) => {
-  
-  if(message.content === '<@!703934678880485406>' || message.content === '<@703934678880485406>') return message.channel.send(`Current prefix is \`${client.serverconfig.get(message.guild.id, 'prefix')}\``)
+  let mentionRegexp = /^<@!?703934678880485406>$/
+	
+  if(mentionRegexp.test(message.content)) return message.channel.send(`Current prefix is \`${client.serverconfig.get(message.guild.id, 'prefix')}\``)
   
   if(message.author.bot) return;
   
