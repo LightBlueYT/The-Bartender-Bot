@@ -9,6 +9,6 @@ module.exports = {
     const embed = new MessageEmbed()
     .setTitle(`${Math.floor(client.ws.ping)}MS`)
     .setColor('GREEN')
-    message.channel.send(embed).catch(console.error)
+    message.channel.send(embed).catch(console.error) 
   },
 };
