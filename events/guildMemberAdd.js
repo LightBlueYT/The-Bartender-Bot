@@ -14,9 +14,7 @@ module.exports = async(client, member) => {
   client.staff.ensure(member.guild.id + member.id, {
     member: member.id,
     isStaff: false,
-    allow_kick: false,
-    allow_ban: false,
-    allow_nute: false,
+    allow_mute: false,
     allow_warn: false
   });
 }

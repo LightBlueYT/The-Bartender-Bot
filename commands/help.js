@@ -1,86 +1,69 @@
+const {red, green} = require('../colors.json')
 module.exports = {
 	name: 'help',
-	description: 'Its help',
+	description: 'Shows all commands in a nice list',
   guildOnly: false,
   ownerOnly: false,
   aliases: ['h'],
   category: 'info', //mod info fun misc
   perms_needed: [],
 	execute(message, args, client, MessageEmbed) {
+    let commands = client.commands
+    const prefix = client.prefix
     
-    const Info = client.commands.filter(c => c.category === 'info').size
-    const Mod = client.commands.filter(c => c.category === 'mod').size
-    const Fun = client.commands.filter(c => c.category === 'fun').size
-    const Misc = client.commands.filter(c => c.category === 'misc').size
+    if(message.guild && message.author.id !== message.guild.ownerID) commands = commands.filter(c => message.member.permissions.has(c.perms_needed))
+    if(message.author.id !== '232466273479426049') commands = commands.filter(c => !c.ownerOnly)
     
-    let prefix;
-    if(message.guild) prefix = client.serverconfig.get(message.guild.id,'prefix')
-    if(!message.guild) prefix = '!'
+    const mod = commands.filter(c => c.category === 'mod').size
+    const info = commands.filter(c => c.category === 'info').size
+    const fun = commands.filter(c => c.category === 'fun').size
+    const misc = commands.filter(c => c.category === 'misc').size
     
+    let search;
     
-    if(!args[0]){
+    if(!!args[0]) search = args[0].toLowerCase()
+    
+    let cmd = client.commands.get(search) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(search))
+    
+    let color;
+    if(message.guild) color = message.member.roles.highest.hexColor;
+    if(!message.guild) color = green;
+    
+    if(!search) {
       const embed = new MessageEmbed()
-      .setTitle(client.user.username + `'s commands`)
-      .setColor('#008000')
-      .addField(`Mod (${Mod})`, 'Moderation commands only available to members with special permissions', true)
+      .setTitle('Commands')
+      .addField(`Mod commands (${mod})`, `Moderation commands such as kick`, true)
+      .addField(`Info commands (${info})`, `Info commands such as ping`, true)
       .addField(`\u200b`, `\u200b`, true)
-      .addField(`Info (${Info})`, 'Informational commands available to everyone such as userinfo or serverinfo', true)
-      .addField(`Fun (${Fun})`, 'Fun commands thats just gonna make you laugh your ass off (Warning this bot takes no responsibility if you loose your ass during usage)', true)
+      .addField(`Fun commands (${fun})`, `Fun commands such as kill`, true)
+      .addField(`Misc commands (${misc})`, `Misc commands that are mostly dev commands`, true)
       .addField(`\u200b`, `\u200b`, true)
-      .addField(`Misc (${Misc})`, 'Commands that didnt fit into any category', true)
-      .setThumbnail(client.user.avatarURL())
-      .setDescription(`Use ${prefix}help {category/command} for command list/help`)
+      .setColor(color)
+      .setFooter(`You can get commands by specifying the category`)
+      
+      message.author.send(embed).catch(e => message.channel.send(embed))
+      } else if(!cmd && commands.filter(c => c.category === search).size >= 1) {
+      commands = commands.filter(c => c.category === search)
+
+      
+      const embed = new MessageEmbed()
+      .setTitle(`${search.toUpperCase()}`)
+      .setDescription(commands.map(c => `${prefix}${c.name}: ${c.description}`).join('\n'))
+      .setFooter(`For specific commands please mention the command`)
+      .setColor(color)
+      
+      message.author.send(embed).catch(e => message.channel.send(embed))
+      } else {
+      
+      if(!client.commands.has(args[0])) return message.channel.send('Invalid command')
+      if(!message.member.permissions.has(cmd.perms_needed)) return message.channel.send(`You don't have permissions to this command`)
+      
+      const embed = new MessageEmbed()
+      .setTitle(`${prefix}${cmd.name}`)
+      .setDescription(`${cmd.description}\n\n__Aliases__ \`\`\`${cmd.aliases.join('\n')}\u200b\`\`\`\n\n__Permissions required__\`\`\`${cmd.perms_needed.join('\n')}\u200b\`\`\``)
+      .setColor(color)
       
       message.author.send(embed).catch(e => message.channel.send(embed))
     }
-    
-    if(!args[0]) return;
-    let helpC = args[0]
-    helpC = helpC.toLowerCase()
-    
-    if(client.commands.filter(c => c.category === helpC).size <= 0) {
-      
-      const cmd = client.commands.get(helpC) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(helpC))
-      
-      if(!cmd){
-        const embed = new MessageEmbed()
-        .setTitle(`${helpC} is not a valid category/command`)
-        .setColor('#FF0000')
-      
-        return message.channel.send(embed)
-      }
-      
-      if(cmd.ownerOnly && message.author.id !== '232466273479426049') {
-        const embed = new MessageEmbed()
-        .setTitle(`${helpC} is not a valid category/command`)
-        .setColor('#FF0000')
-      
-        return message.channel.send(embed)
-      }
-      
-      if(cmd) {
-        const embed = new MessageEmbed()
-        .setTitle(`Information about the **${cmd.name}** command`)
-        .setColor('#008000')
-        .addField('Alias(es)', cmd.aliases.join('\n') + '\u200b')
-        .addField('Guild only', cmd.guildOnly + '\u200b')
-        if(!!cmd.perms_needed) embed.addField('Permissions required', cmd.perms_needed.join('\n'))
-        embed.setDescription(cmd.description)
-        
-        return message.author.send(embed).catch(e => message.channel.send(embed))
-      }
-      
-
-    }
-    
-    const embed = new MessageEmbed()
-    .setTitle(`Commands in the ${helpC} category`)
-    .setDescription(client.commands.filter(c => c.category === helpC).map(c => c.name).join('\n'))
-    .setColor('#008000')
-    .setFooter(`Use ${prefix}help {command/alias} to get info about the command
-`)
-    
-
-    message.author.send(embed).catch(e => message.channel.send(embed))
   },
 };

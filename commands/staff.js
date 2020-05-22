@@ -6,7 +6,7 @@ module.exports = {
   ownerOnly: false,
   aliases: [],
   category: 'mod', //mod info fun misc
-  perms_needed: [],
+  perms_needed: ['ADMINISTRATOR'],
 	execute(message, args, client, MessageEmbed) {
 
     if(message.member.permissions.has('ADMINISTRATOR') || message.guild.ownerID === message.member.id) {
@@ -45,9 +45,7 @@ module.exports = {
           client.staff.ensure(message.guild.id + target.id, {
             member: target.id,
             isStaff: false,
-            allow_kick: false,
-            allow_ban: false,
-            allow_nute: false,
+            allow_mute: false,
             allow_warn: false
           });
         }

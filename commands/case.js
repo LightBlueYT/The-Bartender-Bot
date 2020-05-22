@@ -5,7 +5,7 @@ module.exports = {
   guildOnly: true,
   ownerOnly: false,
   aliases: [],
-  category: 'info', //mod info fun misc
+  category: 'mod', //mod info fun misc
   perms_needed: [],
 	execute(message, args, client, MessageEmbed) {
     let caseN = args[0].replace('#', '')

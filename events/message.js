@@ -3,10 +3,17 @@ const {MessageEmbed} = require('discord.js');
 
 module.exports = (client, message) => {
   let mentionRegexp = /^<@!?703934678880485406>$/
-	
+  client.prefix;
+  if(message.guild) {
+	  client.prefix = client.serverconfig.get(message.guild.id, 'prefix')
+  } else {
+    client.prefix = '!'
+  }
   if(mentionRegexp.test(message.content)) return message.channel.send(`Current prefix is \`${client.serverconfig.get(message.guild.id, 'prefix')}\``)
   
   if(message.author.bot) return;
+  
+  if(!message.content.startsWith(prefix) || message.author.bot) return
   
   if(message.guild){
     
@@ -20,17 +27,10 @@ module.exports = (client, message) => {
     client.staff.ensure(message.guild.id + message.author.id, {
       member: message.member.id,
       isStaff: false,
-      allow_kick: false,
-      allow_ban: false,
       allow_mute: false,
       allow_warn: false
     });
-    //Guild Custom Staff End
-    
-    if (!message.content.startsWith(client.serverconfig.get(message.guild.id, 'prefix'))) return;
-  
-  } else {
-    if (!message.content.startsWith('!') || message.author.bot) return;
+    //Guild Custom Staff End  
   }
 	const args = message.content.slice(prefix.length).split(/ +/);
   const commandName = args.shift().toLowerCase();

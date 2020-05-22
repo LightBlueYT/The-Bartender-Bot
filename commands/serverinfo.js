@@ -3,7 +3,7 @@ module.exports = {
 	description: 'Shows information for server',
   guildOnly: true,
   ownerOnly: false,
-  aliases: ['info', 'server', 'guild', 'guildinfo'],
+  aliases: ['server', 'guild', 'guildinfo'],
   category: 'info', //mod info fun misc
   perms_needed: [],
 	execute(message, args, client, MessageEmbed) {
