@@ -6,6 +6,7 @@ module.exports = {
   ownerOnly: false,
   aliases: [],
   category: 'cat', //mod info fun misc
+  perms_needed: [],
 	execute(message, args, client, MessageEmbed) {
     
   },

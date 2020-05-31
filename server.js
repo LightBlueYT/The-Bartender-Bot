@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const Enmap = require('enmap');
-const {token} = require('./config.json')
+const {token} = require('./config.json') // also if the token is in process.env what is this for
 
 const fs = require('fs');
 
@@ -38,9 +38,10 @@ client.serverconfig = new Enmap({name: `serverconfig`})
 client.xp = new Enmap({name: `xp`})
 client.welcomemessage = new Enmap({name: `Welcomemessage`})
 client.staff = new Enmap({name: `staff`})
+client.cases = new Enmap({name: `cases`})
+client.cchan = new Enmap({name: `cchan`})
 
-
-client.login(token);
+client.login(process.env.TOKEN); // Fun Fact: if you name it DISCORD_TOKEN instead of TOKEN you don't even need to provide any parameters!
 
 const http = require("http");
 const express = require("express");

@@ -2,26 +2,49 @@ const {prefix, owner} = require('../config.json');
 const {MessageEmbed} = require('discord.js');
 
 module.exports = (client, message) => {
-  
-  if(message.mentions.users.has(client.user.id)) return message.channel.send(`Current prefix is \`${client.serverconfig.get(message.guild.id, 'prefix')}\``)
+
+  let mentionRegexp = /^<@!?703934678880485406>$/
+  client.prefix;
+  if(message.guild) {
+	const guild = message.guild;
+  	const def = guild.channels.cache.find(c => c.name.match('welcome')) || guild.channels.cache.find(c => c.name.match('new-members')) || guild.channels.cache.find(c => c.name.match('general')) || guild.channels.cache.filter(c => c.permissionsFor(guild.member(client.user)).has('SEND_MESSAGES')).first() || guild.systemChannel;
+	  
+  	client.serverconfig.ensure(guild.id, {
+    		welcome_channel: def.id,
+    		welcome_channel_name: def.name,
+    		prefix: '!'
+  	});
+  	client.welcomemessage.ensure(guild.id, {
+    		message: 'Hey I just joined the server, thanks for the invite!',
+    		messages: ['Hey I just joined!', 'I joined this server just now, wow!'],
+    		random: false
+  	});
+	 client.prefix = client.serverconfig.get(message.guild.id, 'prefix')
+  } else {
+    client.prefix = '!'
+  }
+  if(mentionRegexp.test(message.content)) return message.channel.send(`Current prefix is \`${client.serverconfig.get(message.guild.id, 'prefix')}\``)
   
   if(message.author.bot) return;
   
+  if(!message.content.startsWith(prefix) || message.author.bot) return
+  
   if(message.guild){
-    if (!message.content.startsWith(client.serverconfig.get(message.guild.id, 'prefix'))) return;
+    
+    //Guild Case Channel Start
+    client.cchan.ensure(message.guild.id, {
+      channel: ''
+    })
+    //Guild Case Channel End
     
     //Guild Custom Staff Start
     client.staff.ensure(message.guild.id + message.author.id, {
       member: message.member.id,
       isStaff: false,
-      allowKick: false,
-      allowBan: false,
-      allowMute: false,
-      allowWarn: false
+      allow_mute: false,
+      allow_warn: false
     });
-    //Guild Custom Staff End
-  } else {
-    if (!message.content.startsWith('!') || message.author.bot) return;
+    //Guild Custom Staff End  
   }
 	const args = message.content.slice(prefix.length).split(/ +/);
   const commandName = args.shift().toLowerCase();
@@ -34,14 +57,14 @@ module.exports = (client, message) => {
     let embed = new MessageEmbed()
     .setTitle('Command can only be used in guilds')
     .setColor('RED')
-    return message.channel.send(embed).catch(err => console.error(err))
+    return message.channel.send(embed).catch(console.error)
   }
   
   if(command.ownerOnly && message.author.id !== owner.id){
     let embed = new MessageEmbed()
     .setTitle('You can\'t run this command')
     .setColor('RED')
-    return message.channel.send(embed).catch(err => console.error(err))
+    return message.channel.send(embed).catch(console.error)
   }
 
   try {
@@ -52,7 +75,7 @@ module.exports = (client, message) => {
       const embed = new MessageEmbed()
       .setTitle('An error occured')
       .setColor('RED')
-      message.channel.send(embed).catch(err => console.error(err))
+      message.channel.send(embed).catch(console.error)
     };
   }
 }

@@ -1,0 +1,30 @@
+{
+  "name": "The_Bartender",
+  "version": "0.0.1",
+  "description": "A simple Discord bot to solve your problems",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "discord.js": "^12.2.0",
+    "enmap": "^5.2.4",
+    "better-sqlite3": "^7.0.1",
+    "pm2": "^4.4.0",
+    "moment": "^2.25.3",
+    "request": "2.81.0"
+  },
+  "engines": {
+    "node": "12.x"
+  },
+  "repository": {
+    "url": "https://glitch.com/edit/#!/hello-express"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "glitch",
+    "express"
+  ]
+}

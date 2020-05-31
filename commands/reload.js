@@ -5,6 +5,8 @@ module.exports = {
   guildOnly: false,
   ownerOnly: true,
   aliases: ['refresh'],
+  category: 'misc', // mod > info > fun > misc
+  perms_needed: [],
 	execute(message, args, client, MessageEmbed) {
       
     if(!args[0]){

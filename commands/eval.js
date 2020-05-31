@@ -1,9 +1,13 @@
+const ms = require('ms');
+const moment = require('moment');
 module.exports = {
 	name: 'eval',
 	description: 'Eval',
   guildOnly: false,
   ownerOnly: true,
   aliases: ['ev', 'e'],
+  category: 'misc', // mod > info > fun > misc
+  perms_needed: [],
 	execute(message, args, client, MessageEmbed) {
     
     const clean = text => {
