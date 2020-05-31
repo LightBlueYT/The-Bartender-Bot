@@ -4,7 +4,7 @@
   "description": "A simple Discord bot to solve your problems",
   "main": "server.js",
   "scripts": {
-    "start": "pm2-runtime start ecosystem.config.js --env production"
+    "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.17.1",
@@ -14,7 +14,6 @@
     "pm2": "^4.4.0",
     "moment": "^2.25.3",
     "request": "2.81.0",
-    "pm2": "^4.4.0"
   },
   "engines": {
     "node": "12.x"
