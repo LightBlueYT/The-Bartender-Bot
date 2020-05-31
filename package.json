@@ -12,7 +12,8 @@
     "enmap": "^5.2.4",
     "better-sqlite3": "^7.0.1",
     "pm2": "^4.4.0",
-    "moment": "^2.25.3"
+    "moment": "^2.25.3",
+    "request": "2.81.0"
   },
   "engines": {
     "node": "12.x"
