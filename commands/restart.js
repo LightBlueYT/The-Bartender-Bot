@@ -1,4 +1,5 @@
-const {red, green} = require('../colors.json')
+const {red, green} = require('../colors.json');
+const cons = require('child_process');
 module.exports = {
 	name: 'restart',
 	description: 'Restarts bot',
