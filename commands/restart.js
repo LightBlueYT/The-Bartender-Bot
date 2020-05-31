@@ -9,10 +9,7 @@ module.exports = {
   perms_needed: [],
 	execute(message, args, client, MessageEmbed) {
     message.channel.send('Restarting...').then(m => {
-      client.destroy().then(() => {
-        client.login(process.env.TOKEN);
-        m.edit('Restarted!')
-      });
+	process.exit(1)
     });
   },
 };
