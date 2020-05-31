@@ -43,10 +43,10 @@ client.cchan = new Enmap({name: `cchan`})
 
 client.login(process.env.TOKEN); // Fun Fact: if you name it DISCORD_TOKEN instead of TOKEN you don't even need to provide any parameters!
 
-process.on('exit', function(code) => {
+process.on('exit', function(code) {
   console.log(`Exited the process with code: ${code}`)
   cons.execSync('node server.js')
-}
+};
 
 const http = require("http");
 const express = require("express");
