@@ -40,8 +40,6 @@ client.welcomemessage = new Enmap({name: `Welcomemessage`})
 client.staff = new Enmap({name: `staff`})
 client.cases = new Enmap({name: `cases`})
 client.cchan = new Enmap({name: `cchan`})
-client.serverconfig.destroy()
-
 
 client.login(process.env.TOKEN); // Fun Fact: if you name it DISCORD_TOKEN instead of TOKEN you don't even need to provide any parameters!
 
