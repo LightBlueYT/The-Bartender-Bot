@@ -46,7 +46,7 @@ client.login(process.env.TOKEN); // Fun Fact: if you name it DISCORD_TOKEN inste
 process.on('exit', function(code) {
   console.log(`Exited the process with code: ${code}`)
   cons.execSync('node server.js')
-};
+});
 
 const http = require("http");
 const express = require("express");
