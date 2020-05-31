@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const client = new Discord.Client({presence: {activity: {name: "!help | Mention for prefix",type:"WATCHING"}}});
+const client = new Discord.Client();
 const Enmap = require('enmap');
 const {token} = require('./config.json') // also if the token is in process.env what is this for
 
