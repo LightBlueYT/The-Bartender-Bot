@@ -1,3 +1,3 @@
 module.exports=(client)=>{
-  client.user.setActivity('!help | mention for prefix', {type: 'watching'})
+  client.user.setPresence({ activity: { name: '!help | mention for prefix' }, status: 'online' })
 }
