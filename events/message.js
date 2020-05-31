@@ -6,7 +6,6 @@ module.exports = (client, message) => {
   let mentionRegexp = /^<@!?703934678880485406>$/
   client.prefix;
   if(message.guild) {
-	client.prefix = client.serverconfig.get(message.guild.id, 'prefix')
 	const guild = message.guild;
   	const def = guild.channels.cache.find(c => c.name.match('welcome')) || guild.channels.cache.find(c => c.name.match('new-members')) || guild.channels.cache.find(c => c.name.match('general')) || guild.channels.cache.filter(c => c.permissionsFor(guild.member(client.user)).has('SEND_MESSAGES')).first() || guild.systemChannel;
 	  
@@ -20,6 +19,7 @@ module.exports = (client, message) => {
     		messages: ['Hey I just joined!', 'I joined this server just now, wow!'],
     		random: false
   	});
+	 client.prefix = client.serverconfig.get(message.guild.id, 'prefix')
   } else {
     client.prefix = '!'
   }
