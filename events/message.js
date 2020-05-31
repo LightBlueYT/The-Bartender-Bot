@@ -2,10 +2,24 @@ const {prefix, owner} = require('../config.json');
 const {MessageEmbed} = require('discord.js');
 
 module.exports = (client, message) => {
+
   let mentionRegexp = /^<@!?703934678880485406>$/
   client.prefix;
   if(message.guild) {
-	  client.prefix = client.serverconfig.get(message.guild.id, 'prefix')
+	client.prefix = client.serverconfig.get(message.guild.id, 'prefix')
+  	const def = guild.channels.cache.find(c => c.name.match('welcome')) || guild.channels.cache.find(c => c.name.match('new-members')) || guild.channels.cache.find(c => c.name.match('general')) || guild.channels.cache.filter(c => c.permissionsFor(guild.member(client.user)).has('SEND_MESSAGES')).first() || guild.systemChannel;
+  	const guild = message.guild;
+	  
+  	client.serverconfig.ensure(guild.id, {
+    		welcome_channel: def.id,
+    		welcome_channel_name: def.name,
+    		prefix: '!'
+  	});
+  	client.welcomemessage.ensure(guild.id, {
+    		message: 'Hey I just joined the server, thanks for the invite!',
+    		messages: ['Hey I just joined!', 'I joined this server just now, wow!'],
+    		random: false
+  	});
   } else {
     client.prefix = '!'
   }
