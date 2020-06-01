@@ -1,1 +1,1 @@
-worker: pm2 start server.js
+worker: node server.js
