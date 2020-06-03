@@ -25,7 +25,7 @@ module.exports = {
       if (typeof evaled !== "string")
         evaled = require("util").inspect(evaled);
 	    
-	if(evaled == client.token) evaled = "Barak Obama for president!"
+	if(evaled == client.token) return message.channel.send('Barak Obama for president!');
  
       const embed = new MessageEmbed()
       .setTitle(`Successfull Evaluation`)
