@@ -39,7 +39,7 @@ module.exports = {
       const embed = new MessageEmbed()
       .setTitle(`Unsuccessfull Evaluation`)
       .setColor(`#FF0000`)
-      .addField(`Input`, `\`\`\`js\n${args.join(' ')}\`\`\``)
+      .addField(`Input`, `\`\`\`js\n${code}\`\`\``)
       .addField(`Error`, `\`\`\`js\n${err}\`\`\``)
       .setTimestamp()
       .setThumbnail('https://media1.tenor.com/images/a4ffc23c3537fc4eb8c076c4fb072f32/tenor.gif?itemid=7304550')
