@@ -13,9 +13,9 @@ module.exports = {
 	async execute(message, args, client, MessageEmbed) {
       let queryString = args[0]
         let project = "master"
-        if(args[1] && args[1].startsWith('--src=')) [, project]= args[1].split('=')
-        if(!validateProject(project)) return msg.channel.send('Invalid source.')
+        if(args[1] && args[1].startsWith('=src')) [, project]= args[1].split('=').join('--');
+        if(!validateProject(project)) return message.channel.send('Invalid source.')
         let docs = await fetch(`https://djsdocs.sorta.moe/v2/embed?src=${project}&q=${queryString}`).then(r => r.json())
-        return await msg.channel.send({embed: docs})
+        return await message.channel.send({embed: docs})
   },
 };
