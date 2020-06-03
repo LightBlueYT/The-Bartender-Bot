@@ -19,7 +19,7 @@ module.exports = {
     const args1 = message.content.split(" ").slice(1);
  
     try {
-      const code = args.join(" ");
+      const code = args.join(" ").split("<").join("").split(">").join("").split("#").join(".");
       let evaled = eval(code);
  
       if (typeof evaled !== "string")
