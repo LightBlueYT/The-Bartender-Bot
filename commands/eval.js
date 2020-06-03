@@ -28,7 +28,7 @@ module.exports = {
       const embed = new MessageEmbed()
       .setTitle(`Successfull Evaluation`)
       .setColor(`#008000`)
-      .addField(`Input`, `\`\`\`js\n${code}\`\`\``)
+      .addField(`Input`, `\`\`\`js\n${args.join(" ")}\`\`\``)
       .addField(`Output`, `\`\`\`js\n${evaled}\`\`\``)
       .setTimestamp()
       .setThumbnail('https://media1.tenor.com/images/88d89612db5eaacc6c9c6ac6bf6cd6e7/tenor.gif?itemid=7715402')
