@@ -1,5 +1,4 @@
 const {red, green} = require('../colors.json');
-const{MessageEmbed}=require('discord.js');
 const fetch = require('node-fetch');
 let valid_projects = ['stable', 'master', 'rpc', 'commando', 'akairo', 'akairo-master'];
 let validateProject = (p)=>valid_projects.includes(p);
@@ -8,7 +7,7 @@ module.exports = {
 	description: 'DJS documentation',
   guildOnly: false,
   ownerOnly: true,
-  aliases: [djs],
+  aliases: ['djs'],
   category: 'misc', //mod info fun misc
   perms_needed: [],
 	async execute(message, args, client, MessageEmbed) {
